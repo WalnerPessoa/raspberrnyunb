@@ -9,7 +9,7 @@
 # Alteracao : 19/09/2024                                     #
 #                                                            #
 # arquivos desse sistema:                                    #
-# rec_facial_fast_v3.py                                             #
+# rec_facial_fast_v3.py                                      #
 # main.py                                                    #
 # ativar_gpio.py                                             #
 # -----------------------------------------------------------#

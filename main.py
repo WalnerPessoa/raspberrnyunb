@@ -48,7 +48,10 @@ def load_face_encodings(image_paths):
     for image_path in image_paths:
         #image = face_recognition.load_image_file(image_path)  # Carrega a imagem. #walner 8/10/24
         # Carrega a imagem e redimensiona para 300x300 pixels no máximo #walner 8/10/24
-        image = Image.open(image_path) #walner 8/10/24
+        try:
+            image = Image.open(image_path)
+        except Exception as e:
+            print(f"Erro ao carregar a imagem {image_path}: {e}") # de Castro 16/12/24
         image.thumbnail((500, 500))  # Reduz o tamanho mantendo a proporção #walner 8/10/24
         image = np.array(image)  # Converte para array numpy #walner 8/10/24
 
@@ -167,11 +170,17 @@ async def upload(
         # Lista para armazenar os caminhos das imagens carregadas.
         image_paths = []
 
+        ############ DEBUG ############
+        #print(name)
+        #print(photos)
+        #print(audio)
+        #print(item)
+
         # Salva todas as imagens enviadas no diretório de uploads.
         for photo in photos:
             photo_path = os.path.join(UPLOAD_FOLDER, photo.filename)
-            #with open(photo_path, "wb") as buffer: # walner 8/10/24
-            #    buffer.write(await photo.read())  # Lê e escreve a imagem no diretório. #walner 8/10/24
+            with open(photo_path, "wb+") as file_object:
+                file_object.write(photo.file.read())
             image_paths.append(photo_path)
 
         # Salva o arquivo de áudio no diretório de áudios.
